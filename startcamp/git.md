@@ -102,3 +102,11 @@ $ git push origin master
 
 - ```origin``` 이라는 이름의 원격 저장소로 ```master``` 저장소 내용을 보낸다.(to from  순서 ㅇㅇ)
 
+
+
+### 4. Git 내용 복사
+
+```shell
+$ git clone {주소 내용 복사}
+```
+
