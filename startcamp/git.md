@@ -92,7 +92,7 @@ $ git remote rm origin
 
 
 
-### 3. 원격 저장소로 업로드
+### 3. 원격 저장소와 업로드/다운로드
 
 - 로컬 저장소 내용을 원격 저장소로 업로드 하는 명령어
 
@@ -101,4 +101,22 @@ $ git push origin master
 ```
 
 - ```origin``` 이라는 이름의 원격 저장소로 ```master``` 저장소 내용을 보낸다.(to from  순서 ㅇㅇ)
+
+- 원격 저장소 내용을 로컬에 다운로드 하는 명령어
+
+```shell
+$ git pull origin master
+```
+
+- 위와 반대 역할 하는 것
+
+
+
+### 4. 원격 저장소에서 로컬로 가져오기
+
+- github이나 gitlab의 repo 주소를 복사해둔뒤, 아래 코드를 활용
+
+```shell
+$ git clone {가져오고자 하는 repo 주소}
+```
 
