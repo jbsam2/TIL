@@ -104,9 +104,11 @@ $ git push origin master
 
 
 
-### 4. Git 내용 복사
+### 4. 원격 저장소에서 로컬로 가져오기
+
+- github이나 gitla의 repo주소를 복사해둔뒤, 아래 코드를 활용
 
 ```shell
-$ git clone {주소 내용 복사}
+$ git clone {가져오고자 하는 repo 주소}
 ```
 
