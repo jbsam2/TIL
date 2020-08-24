@@ -1,7 +1,7 @@
 def makepartialmatch(s):
     l=len(s);pi=[0]*l;begin=1;matched=0
     while begin+matched<l:
-        if s[begin+matched]==n[matched]:
+        if s[begin+matched]==s[matched]:
             matched+=1
             pi[begin+matched-1]=matched
         else:
