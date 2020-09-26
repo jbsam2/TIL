@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dtl-example</title>
+</head>
+<body>
+  <h3>1. Lorem ipsum.</h3>
+  {% lorem %}
+  <hr>
+  {% lorem 3 w %}
+  <hr>
+  {% lorem 5 w random %}
+  <hr>
+  {% lorem 2 p %}
+
+
+  <h3>2. 글자 수 제한</h3>
+  <p>{{ my_sentence|truncatechars:3 }}</p>
+  <p>{{ my_sentence|truncatechars:10 }}</p>
+  <p>{{ my_sentence|truncatewords:10 }}</p>
+
+  <h3>3. 글자 관련 필터</h3>
+  <p>{{ 'abc'|length }}</p>
+  <p>{{ 'ABC'|lower }}</p>
+  <p>{{ my_sentence|title }}</p>
+  <p>{{ 'abc def'|capfirst }}</p>
+  <p>{{ menus|random }}</p>
+
+
+  <h3>4. 연산</h3>
+  <p>{{ 4|add:6 }}</p>
+
+  <h3>5. 날짜표현</h3>
+  {{ datetimenow }} <br>
+  {% now "DATETIME_FORMAT" %} <br>
+  {% now "SHORT_DATETIME_FORMAT" %} <br>
+  {% now "DATE_FORMAT" %} <br>
+  {% now "SHORT_DATE_FORMAT" %}
+  <hr>
+  {% now "Y년 m월 d일 (D) h:i" %}
+  <hr>
+  {% now "Y" as current_year %}
+  Copyright {{ current_year }}
+  <hr>
+  {{ datetimenow|date:"SHORT_DATE_FORMAT" }}
+  <hr>
+</body>
+</html>

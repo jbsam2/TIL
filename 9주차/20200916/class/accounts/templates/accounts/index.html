@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>유저 목록</h1>
+  {% for user in users %}
+    <p>유저 번호: {{ user.pk }}</p>
+    <p>이름: {{ user.first_name }}</p>
+    <p>성: {{ user.last_name }}</p>
+    <p>이메일 주소: {{ user.email }}</p>
+    <hr>
+  {% endfor %}
+{% endblock content %}

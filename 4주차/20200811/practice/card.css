@@ -23,6 +23,7 @@ body h4{
   width: 700px;
   border-style: dashed;
   border-width: 2px;
+  margin: 200px auto;
 }
 
 .card-nav{
@@ -48,29 +49,19 @@ body h4{
   margin-left: 18px;
 }
 
-/* .card-body-title {
-  position: relative;
-}
-
-.card-body-title *{
-  display: inline;
-}
-.card-body-title > p{
-  position: absolute;
-  right: 0px;
-} */
-
 .card-body-title{
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .card-img{
+  box-sizing: border-box;
   height: 330px;
   width: 100%;
 }
 
 .card-img-description{
+  box-sizing: border-box;
   height: 70px;
   padding-top: 5px;
 }
