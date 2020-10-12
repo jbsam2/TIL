@@ -1,0 +1,31 @@
+{% load bootstrap4 %}
+
+
+<div class="card mb-3 style="max-width: 540px;">
+  {% with followers=person.followers.all followings=person.followings.all %}
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      {% if person.image %}
+      <img src="{{ person.image.url }}" alt="{{ person.image }}">
+    {% endif %}
+    </div>
+    <div class="col-md-8 align-middle">
+      <div class="card-body">
+        <br>
+        <h5 class="card-title">{{ person.username }}</h5>
+        <p class="card-text">팔로워 수 : {{ followers|length }} / 팔로잉 수 : {{ followings|length }}</p>
+        {% if request.user != person %}
+        <form action="{% url 'accounts:follow' person.pk %}" method="POST">
+          {% csrf_token %}
+          {% if request.user in followers %}
+            <button class="btn btn-secondary">Unfollow</button>
+          {% else %}
+            <button class="btn btn-primary">Follow</button>
+          {% endif %}
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endwith %}
+</div>

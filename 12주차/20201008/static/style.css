@@ -1,0 +1,19 @@
+body {
+  background: white url("background-2079406_1920.jpg");
+}
+
+.bg {
+  background-color: white;
+}
+
+.vertical-centered {
+  display: table; 
+  margin-top: auto; 
+  margin-bottom: auto; 
+}
+
+.centered { 
+  display: table; 
+  margin-left: auto; 
+  margin-right: auto; 
+}

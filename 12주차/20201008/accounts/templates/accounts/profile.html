@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h1 class="text-center">{{ person.username }}의 프로필</h1>
+<hr>
+{% include 'accounts/_follow.html' %}
+
+<hr>
+
+<h5>{{ person.username }}이 작성한 게시글</h5>
+{% for review in person.review_set.all %}
+  <li>{{ review.title }}</li>
+{% endfor %}
+<hr>
+
+<h5>{{ person.username }}이 작성한 댓글</h5>
+{% for comment in person.comment_set.all %}
+  <li>{{ comment.content }}</li>
+{% endfor %}
+<hr>
+
+<h5>{{ person.username }}이 좋아요 한 게시글</h5>
+{% for review in person.like_reviews.all %}
+  <li>{{ review.title }}</li>
+{% endfor %}
+<hr>
+
+<a href="{% url 'community:review_list' %}" class='btn btn-primary'>back</a>
+
+{% endblock %}
