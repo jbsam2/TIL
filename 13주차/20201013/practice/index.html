@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TODO</title>
+  <style>
+    .done {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" />
+  <button>Add</button>
+  <ul></ul>
+
+  <script>
+    const input = document.querySelector('input')
+    function addTodo () {      
+      const content = input.value
+
+      const li = document.createElement('li')
+      li.innerText = content
+
+      // li 요소를 클릭하면 해당 요소에 "done" 클래스가 toggle 된다.
+      li.addEventListener('click', function(event){
+          event.target.classList.toggle('done')          
+        })
+      // 새로운 button 요소를 생성하고, "x" 문자를 innerText로 넣는다.
+      const deleteButton = document.createElement('button')
+
+      deleteButton.innerText = 'X'
+      deleteButton.style.marginLeft = '10px'
+      // button 요소가 클릭되었을 때 li 요소를 삭제한다.
+      deleteButton.addEventListener('click',function(){
+        li.remove()
+      })
+      // li 요소에 button 요소를 자식요소로 추가한다.
+      li.appendChild(deleteButton)
+      const ul = document.querySelector('ul')
+      ul.append(li)
+
+      input.value = ''
+    }
+
+    const button = document.querySelector('button')
+    button.addEventListener('click', addTodo)
+    input.addEventListener('keypress', function(event){
+      if (event.code==='Enter'){
+        addTodo()
+      }
+    })
+  </script>
+</body>
+</html>
