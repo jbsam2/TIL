@@ -1,0 +1,56 @@
+<div class="jumbotron text-center text-white bg-dark">
+  <p class="lead mb-1">작성자 정보</p>
+  <h1 class="display-4">{{ person.username }}</h1>
+  <hr>
+  {% with followings=person.followings.all followers=person.followers.all %}
+    <p class="lead">
+      <p id='follow-info'>팔로잉 : {{ followings|length }}  /  팔로워 : {{ followers|length }}</p>    
+    </p>
+    <!-- 팔로우 버튼 -->
+    {% if request.user != person %}
+      <form class='follow-form' data-person-id="{{person.pk}}">
+        {% csrf_token %}
+        {% if request.user in followers %}
+          <button class="btn-lg btn-secondary" id='follow'>Unfollow</button>
+        {% else %}
+          <button class="btn-lg btn-primary" id='follow'>Follow</button>
+        {% endif %}
+      </form>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      const form = document.querySelector('.follow-form')
+      form.addEventListener('submit',function(event){
+        event.preventDefault()
+        const personId = event.target.dataset.personId
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        axios.post(`http://127.0.0.1:8000/accounts/follow/${personId}/`,{},{
+          headers: {
+            'X-CSRFToken': csrftoken
+          }
+        })
+        .then(function(res){
+          console.log(res)
+          const followed = res.data.followed
+          const Icon = document.querySelector(`#follow`)
+          const following = res.data.following_count
+          const follower = res.data.follower_count
+          const follow_info = document.querySelector(`#follow-info`)
+          follow_info.innerText = `팔로잉 : ${following}  /  팔로워 : ${follower}`
+          if (followed){
+            Icon.style.color = '#fff'
+            Icon.style.background = '#6c757d'
+            Icon.style.borderColor = '#6c757d'
+            Icon.innerText = 'Unfollow'
+          }
+          else{            
+            Icon.style.color = '#fff'
+            Icon.style.background = '#007bff'
+            Icon.style.borderColor = '#007bff'
+            Icon.innerText = 'Follow'
+          }
+        })
+      })
+    </script>
+  {% endwith %}
+</div>
