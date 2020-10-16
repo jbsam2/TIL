@@ -1,0 +1,108 @@
+{% load bootstrap4 %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% bootstrap_css %}
+  <script src="https://kit.fontawesome.com/31f88935a9.js" crossorigin="anonymous"></script>
+  <title>pjt07</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sticky-footer/">
+  <link href="https://getbootstrap.com/docs/4.5/examples/sticky-footer/sticky-footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  {% block style %}
+  {% endblock style %}
+</head>
+<body>
+  <body class='d-flex flex-column h-100'>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand" href="http://127.0.0.1:8000/">
+      <i class="fas fa-film"></i>
+      Movie
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'community:review_list' %}">
+            <i class="fas fa-list-ul"></i>
+            ReviewList
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'movies:index' %}">
+            <i class="fas fa-film"></i>
+            MovieList
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'movies:recommended' %}">
+            <i class="fas fa-film"></i>
+            Recommended
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'community:create' %}">
+            <i class="far fa-plus-square"></i>
+            Create
+          </a>
+        </li>
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:profile' request.user.username %}">
+              <i class="fas fa-user"></i>
+              Profile
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+        <form action="{% url 'community:search' %}" method='GET' class="form-inline my-2 my-lg-0">
+          <select name="kind" class='mx-1 custom-select'>
+            <option value="title">리뷰 제목</option>
+            <option value="person">유저</option>
+            <option value="content">리뷰 내용</option>
+            <option value="movie_title_review">영화 제목(리뷰)</option>
+            <option value="movie_title_movie">영화 제목(영화)</option>
+            <option value="genres">장르</option>
+          </select>
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='keyword'>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form> 
+    </div>
+  </nav>
+  <main role="main" class="flex-shrink-0">
+    <div class="container">
+      <h3>Hello, {{ user.username }}</h3>
+    {% if request.user.is_authenticated %}
+      <form action="{% url 'accounts:logout' %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-secondary">Logout</button>
+      </form>
+    {% else %}
+      <a href="{% url 'accounts:signup' %}">Signup</a>
+      <a href="{% url 'accounts:login' %}">Login</a>
+    {% endif %}    
+    {% block content %}
+    {% endblock %}
+    </div>
+  </main>
+  <div class="container">
+       <br><br>
+  </div>
+  <footer class="footer py-1 fixed-bottom text-center footer-dark">
+    <div class="container">
+      <span class="text-muted">made by KGB & Jay Lee</span>
+    </div>
+  </footer>  
+  {% bootstrap_javascript jquery='full' %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  {% block script %}
+  {% endblock script %}
+</body>
+</html>

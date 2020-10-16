@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+{% for person in persons %}
+<div class="card mb-3 style="max-width: 540px;">
+  {% with followers=person.followers.all followings=person.followings.all %}
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      {% if person.image %}
+      <img src="{{ person.image.url }}" alt="{{ person.image }}">
+    {% endif %}
+    </div>
+    <div class="col-md-8 align-middle">
+      <div class="card-body">
+        <br>
+        <a class="card-title" href='{% url 'accounts:profile' person.username%}'>{{ person.username }}</a>
+        <p class="card-text" id='follow-info-{{ person.pk }}'>팔로워 수 : {{ followers|length }} / 팔로잉 수 : {{ followings|length }}</p>
+        {% if request.user != person %}
+        <form class='follow-form' data-person-id='{{person.pk}}'>
+          {% csrf_token %}
+          {% if request.user in followers %}
+            <button class="btn btn-secondary" id='follow-{{ person.pk }}'>Unfollow</button>
+          {% else %}
+            <button class="btn btn-primary" id='follow-{{ person.pk }}'>Follow</button>
+          {% endif %}
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endwith %}
+</div>
+{% endfor %}
+{% endblock content %}
+
+{% block script %}
+  <script>
+    const forms = document.querySelectorAll('.follow-form')
+    forms.forEach(form => {
+      form.addEventListener('submit',function(event){
+      event.preventDefault()
+      const personId = event.target.dataset.personId
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      axios.post(`/accounts/${personId}/follow/`,{},{
+        headers: {
+          'X-CSRFToken': csrftoken
+        }
+      })
+      .then(function(res){
+        const followed = res.data.followed
+        const Icon = document.querySelector(`#follow-${personId}`)
+        const following = res.data.following_count
+        const follower = res.data.follower_count
+        const follow_info = document.querySelector(`#follow-info-${personId}`)
+        follow_info.innerText = `팔로워 수 : ${following} / 팔로잉 수 : ${follower}`
+        if (followed){
+          Icon.className = "btn btn-secondary"
+          Icon.innerText = 'Unfollow'
+        }
+        else{
+          Icon.className = "btn btn-primary"
+          Icon.innerText = 'Follow'
+        }
+      })
+    })      
+    });
+    
+  </script>
+{% endblock script %}

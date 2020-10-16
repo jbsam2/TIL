@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+<div> 
+  <h1 class="text-center">Reviewlist</h1>
+  {% for review in reviews %}
+    <div class="card mb-3 style="max-width: 540px;">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          {% if review.image %}
+            <img src="{{ review.image.url }}" alt="{{ review.image }}">
+          {% endif %}
+        </div>
+        <div class="col-md-8 align-middle">
+          <div class="card-body">
+            <br>
+            <h4 class="card-title"><a href="{% url 'community:detail' review.pk %}"><b>{{ review.title }}</b></a></h4>
+            <p class="card-text">작성자 : <a href="{% url 'accounts:profile' review.user.username %}">{{ review.user }}</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="d-inline like-form" data-review-id='{{review.pk}}'>
+      {% csrf_token %}
+      {% if request.user in review.like_users.all %}
+        <button class="btn btn-link" style="color: crimson;">
+          <i id="like-{{review.pk}}" class="fas fa-heart"></i>
+        </button>
+      {% else %}
+        <button class="btn btn-link" style="color: black;">
+          <i id="like-{{review.pk}}" class="fas fa-heart"></i>
+        </button>
+      {% endif %}
+    </form>
+    <p>
+      <span id="like-count-{{review.pk}}">
+        {{ review.like_users.all|length }} 명이 이 글을 좋아합니다.
+      </span>
+    </p>
+    
+    <br><hr>
+  {% endfor %}
+</div>
+<div>
+  <ul class="pagination justify-content-center">
+      <!-- 이전 페이지 -->
+    {% if reviews.has_previous %}
+      <li class="page-item">
+          <a href="?page=1" class="page-link">&laquo;</a>
+      </li>
+      <li class="page-item">
+          <a class="page-link" 
+              href="?page={{ reviews.previous_page_number }}" 
+              tabindex="-1">&lt;
+          </a>
+      </li>
+    {% endif %}
+      <!-- 페이지 범위 및 현재 페이지 -->
+    {% for page in paginator_range %}
+    {% if reviews.number == page %}
+      <li class="page-item active">
+          <span class="page-link">{{ page }}
+              <span class="sr-only">(current)</span>
+          </span>
+      </li>
+    {% else %}
+      <li class="page-item">
+          <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+      </li>
+    {% endif %}
+    {% endfor %}
+      <!-- 다음 페이지 -->
+    {% if reviews.has_next %}
+      <li class="page-item">
+          <a class="page-link" href="?page={{ reviews.next_page_number }}">&gt;</a>
+      </li>
+      <li class="page-item">
+          <a href="?page={{ reviews.paginator.num_pages }}" class="page-link">&raquo;</a>
+      </li>
+    {% endif %}
+  </ul>
+</div> 
+{% endblock %}
+
+{% block script %}
+  <script>
+    const forms = document.querySelectorAll('.like-form')
+    const csrftoken = document.querySelector('input[name=csrfmiddlewaretoken]').value
+    forms.forEach(form => {
+      form.addEventListener('submit',(event)=>{
+        event.preventDefault()
+        const reviewId = form.dataset.reviewId        
+        axios.post(`/community/${reviewId}/like_list/`,{},{
+          headers: {
+            'X-CSRFToken': csrftoken
+          }
+        })
+        .then((res)=>{
+          if (res.data.error === 'unauthorized'){
+            window.location.href = '/accounts/login/'
+            return
+          }
+          const count = res.data.count
+          const liked = res.data.liked
+          const likeIconColor = document.querySelector(`#like-${reviewId}`)
+          const likeCount = document.querySelector(`#like-count-${reviewId}`)
+          likeCount.innerText = `${count} 명이 이 글을 좋아합니다.`
+          if (liked){
+            likeIconColor.style.color = 'crimson'
+          }
+          else{
+            likeIconColor.style.color = 'black'
+          }
+        })
+      })
+    })
+  </script>
+{% endblock script %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+  <h2 class="text-center">Movie</h2>
+      <div class="card mb-3 style="max-width: 540px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            {% if movie.poster_path %}
+              <img src="{{ movie.poster_path }}" alt="{{ movie.poster_path }}" style="width:200px; height:300px;">
+            {% endif %}
+          </div>
+          <div class="col-md-8 align-middle">
+            <div class="card-body">
+              <br>
+              <h4 class="card-title"><b>{{ movie.title }}</b></h4>
+              <br>
+              <p class="card-text">장르 :
+                {% for genre in movie.genres.all %}
+                  <span>{{ genre.name }}</span>
+                {% endfor %}
+              </p>
+              <p class="card-text">Popularity : {{ movie.popularity }}</p>
+              <p class="card-text">VoteCount : {{ movie.vote_count }}</p>
+              <p class="card-text">평점 : {{ movie.vote_average }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container bg">
+        {% if movie.overview %}
+          <p>{{ movie.overview }}</p>
+        {% else %}
+          <p>줄거리 없음.<p>
+        {% endif %} 
+      </div>
+  <hr>
+{% endblock %}
