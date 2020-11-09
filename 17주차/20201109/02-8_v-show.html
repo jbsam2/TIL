@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9. Vue v-show</title>
+</head>
+<body>
+  <div id="app">
+    <h2>1. v-if</h2>
+    <p v-if='isTrue'>
+      v-if - true
+    </p>
+    <p v-if='isFalse'>
+      v-if - false
+    </p>
+    <!-- 조건에 안맞으면 랜더링을 안함 -->
+    <hr>
+    <h2>2. v-show</h2>
+    <p v-show='isTrue'>
+      v-show - true
+    </p>
+    <p v-show='isFalse'>
+      v-show - false
+    </p>
+    <!-- 랜더링은 하지만 조건에 안맞으면 안보여줌(display:none)으로 -->
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        isTrue: true,
+        isFalse: false,
+      }
+    })
+  </script>
+</body>
+</html>
