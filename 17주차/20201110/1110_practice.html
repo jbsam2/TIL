@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1110 practice</title>
+</head>
+<body>
+  <div id='cat'>
+    <h2>Cat Image</h2>
+    <img :src='CatImage' alt="">
+    <button @click='getcat'>Get Cat</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#cat',
+      data: {
+        CatImage: '',
+      },
+      methods: {
+        getcat: function(){
+          axios.get(`https://api.thecatapi.com/v1/images/search`)
+          .then((res)=>{ 
+            this.CatImage = res.data[0].url
+          })
+          // => 를 사용해야 Vue 인스턴스를 불러오고, function을 사용할 경우는 window 객체를 불러오기 때문에 안된다.
+          // 화살표 함수로 선언 익명함수일 경우, 나머지는 전부 function을 사용
+          // this를 함수 안에서 쓸 때 function 옵션으로 써봤더니 window이면 화살표 함수
+          // this를 함수 안에서 쓸 때 화살표 옵션으로 써봤더니 window이면 function 사용
+          // this를 써봤을 때 vue 가 나오도록 선택 해야 한다.
+        }
+      },      
+    })
+  </script>
+</body>
+</html>
