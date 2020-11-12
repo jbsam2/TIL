@@ -56,7 +56,12 @@ export default {
     onVideoSelect: function (video) {
       this.selectedVideo = video
     }
-  }
+  },
+  watch: { // 변수이름과 같은 이름의 함수를 지정하면 그 값이 변할때마다 작동하게 된다. 말 그대로 감시자의 역할을 한다
+    inputValue: function(value) { // 이 코드에서 value는 입력 받은 값을 의미
+      console.log('watch',value)
+    }
+  },
 }
 </script>
 
