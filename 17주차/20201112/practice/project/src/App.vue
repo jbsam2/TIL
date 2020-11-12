@@ -25,6 +25,16 @@ export default {
         this.caturl = res.data[0].url
       })
     }
-  }
+  },
+  created() {
+    this.geturl()
+    console.log('created!',this.caturl)
+  },
+  mounted() {
+    console.log('mounted!')
+  },
+  updated() {
+    console.log('updated!',this.caturl)
+  },
 }
 </script>
