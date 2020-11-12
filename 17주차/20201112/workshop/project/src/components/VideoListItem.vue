@@ -1,6 +1,6 @@
 <template>
   <li @click="selectVideo">
-    <img :src="youtubeImageSrc" alt="">
+    <img :src="youtubeImageSrc" alt="thumbnail" width="320" height="180">
     {{video.snippet.title | stringUnescape}}
   </li>
 </template>
