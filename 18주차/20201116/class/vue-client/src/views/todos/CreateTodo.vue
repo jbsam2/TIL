@@ -21,7 +21,7 @@ export default {
       const token = localStorage.getItem('jwt')
       const config = {
         headers: {
-          Authorizations: `JWT ${token}`
+          Authorization: `JWT ${token}`
         }
       }
       return config
