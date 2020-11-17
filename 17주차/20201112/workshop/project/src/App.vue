@@ -14,7 +14,7 @@ import SearchBar from '@/components/SearchBar'
 import VideoList from '@/components/VideoList'
 import VideoDetail from '@/components/VideoDetail'
 
-const API_KEY = 
+const API_KEY = 'AIzaSyCsh655apyg5BX0yuWowxu0gZRrIeqc2_I'
 const API_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 
