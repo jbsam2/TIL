@@ -2,11 +2,11 @@
   <div>
     <h1>Login</h1>
     <div>
-      <label for="username">사용자 이름: </label>
+      <label for="username">username: </label>
       <input type="text" id='username' v-model="credentials.username">
     </div>
     <div>
-      <label for="password">비밀번호: </label>
+      <label for="password">password: </label>
       <input
         type="password"
         id='password'
@@ -14,7 +14,7 @@
         @keypress.enter="login"
       >
     </div>
-    <button @click="login">로그인</button>
+    <button @click="login">Login</button>
   </div>
 </template>
 
